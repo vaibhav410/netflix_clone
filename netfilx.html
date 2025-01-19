@@ -1,0 +1,520 @@
+ here's my code 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone - Professional</title>
+    <style>
+        
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #e5e5e5; 
+            scroll-behavior: smooth; /* Smooth scrolling */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #141414; /* Darker background for navbar */
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+ 
+         .navbar .logo img {
+            width: 120px;
+            height: auto; 
+            border-radius: 0; 
+            display: block; 
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            font-size: 14px;
+            color: #e5e5e5; /* Light grey text */
+            transition: color 0.3s ease, transform 0.3s ease;
+        } 
+        
+        .navbar ul li a:hover {
+            color: #e50914;
+            transform: scale(1.1);
+        }
+
+        .navbar .menu-toggle {
+            display: none;
+            font-size: 24px;
+            color: #e5e5e5;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .navbar ul {
+                flex-direction: column;
+                align-items: center;
+                display: none;
+                width: 100%;
+                background-color: #141414;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                padding: 20px 0;
+            }
+
+            .navbar ul.show {
+                display: flex;
+            }
+
+            .navbar ul li {
+                margin: 10px 0;
+            }
+
+            .navbar .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background-image: url("netflix-background.webp");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 1;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .hero-content button {
+            padding: 15px 30px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #e50914;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-content button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(229, 9, 20, 0.7);
+        }
+
+        /* Sections */
+        .sections {
+            padding: 40px 20px;
+            background-image: url("blurry-neon-light-background_23-2148132659.avif");
+            background-size: cover;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #e5e5e5; /* Light grey text */
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            background-color: #1c1c1c; /* Slightly lighter background for cards */
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card .overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            text-align: center;
+            font-size: 14px;
+            color: #e5e5e5; 
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover .overlay {
+            opacity: 1;
+        }
+
+        
+        .footer {
+            background-color: #141414;
+            color: #aaa;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .footer p,
+        .footer a {
+            font-size: 14px;
+            color: #aaa;
+            text-decoration: none;
+            margin: 5px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .footer .faq {
+            margin-top: 30px;
+        }
+
+        .footer .membership {
+            margin-top: 15px;
+            color: #e50914;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .footer .social-icons {
+            margin-top: 20px;
+        }
+
+        .footer .social-icons a {
+            margin: 0 10px;
+            color: #aaa;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .social-icons a:hover {
+            color: #e50914;
+        }
+
+        .footer .contact-info {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer .contact-info p {
+            margin: 5px 0;
+        }
+
+        .footer .contact-info a {
+            color: #e50914;
+            text-decoration: underline;
+        }
+
+        .footer .links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer .links a {
+            margin: 5px 15px;
+            color: #aaa;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .links a:hover {
+            color: #fff;
+        }
+
+        .footer .newsletter {
+            margin-top: 20px;
+        }
+
+        .footer .newsletter input[type="email"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 250px;
+        }
+
+        .footer .newsletter button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #e50914;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer .newsletter button:hover {
+            background-color: #d40813;
+        }
+
+        .logo{
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            padding : 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar ul li {
+                margin: 10px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .hero-content button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .footer .links {
+                flex-direction: column;
+            }
+
+            .footer .links a {
+                margin: 10px 0;
+            }
+
+            .footer .newsletter input[type="email"] {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .footer .newsletter button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo" >
+            <img src="060120f4-b8f2-4ed0-8e5e-daff121d79bf_removalai_preview.png" alt="netflix_logo">
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul id="navbar-menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">TV Shows</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">New & Popular</a></li>
+        </ul>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Movies, TV shows, and more.</h1>
+            <p>Watch anywhere. Cancel anytime.</p>
+            <button>Get Started</button>
+        </div>
+    </section>
+
+    <main class="sections">
+        <div class="section">
+            <h2>Popular on Netflix</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="strangerthings.jpg" alt="Stranger Things">
+                    <div class="overlay">Stranger Things</div>
+                </div>
+                <div class="card">
+                    <img src="queengambit.jpg" alt="The Queen's Gambit">
+                    <div class="overlay">The Queen's Gambit</div>
+                </div>
+                <div class="card">
+                    <img src="extraction.jpg" alt="Extraction">
+                    <div class="overlay">Extraction</div>
+                </div>
+                <div class="card">
+                    <img src="Red notice.jpg" alt="Red Notice">
+                    <div class="overlay">Red Notice</div>
+                </div>
+                <div class="card">
+                    <img src="kaleidoscope.jpg" alt="Kaleidoscope">
+                    <div class="overlay">Kaleidoscope</div>
+                </div>
+                <div class="card">
+                    <img src="zoko.jpg" alt="Zoko">
+                    <div class="overlay">Zoko</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Netflix Originals</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="sweettooth.jpg" alt="Sweet Tooth">
+                    <div class="overlay">Sweet Tooth</div>
+                </div>
+                <div class="card">
+                    <img src="lupin.jpg" alt="Lupin">
+                    <div class="overlay">Lupin</div>
+                </div>
+                <div class="card">
+                    <img src="DALL·E 2024-11-29 02.42.35 - A high-quality fictional movie poster designed for a Netflix-like website. The poster features an action-adventure theme with a mysterious character s.webp" alt="Umbrella Academy">
+                    <div class="overlay">NETFLIX</div>
+                </div>
+                <div class="card">
+                    <img src="The Crown Season 3.jpg" alt="Dark">
+                    <div class="overlay">The Crown Season 3</div>
+                   
+                </div>
+                <div class="card">
+                    <img src="money heghist.jpg" alt="Money Heist">
+                    <div class="overlay">Money Heist</div>
+                </div>
+                <div class="card">
+                    <img src="bridgerton.jpg" alt="Ozark">
+                    <div class="overlay">Bridgerton</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <h3>Frequently Asked Questions</h3>
+        <p><a href="#">What is Netflix?</a></p>
+        <p><a href="#">How much does Netflix cost?</a></p>
+        <p><a href="#">Where can I watch?</a></p>
+        <p><a href="#">How do I cancel?</a></p>
+        <p class="membership">Why Choose Membership? Ad-free, high-quality streaming & exclusive content!</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="contact-info">
+            <p>Contact us: <a href="mailto:support@netflix.com">support@netflix.com</a></p>
+            <p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p>
+        </div>
+        <div class="links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Help Center</a>
+            <a href="#">Jobs</a>
+            <a href="#">Cookie Preferences</a>
+        </div>
+        <div class="newsletter">
+            <p>Subscribe to our newsletter:</p>
+            <input type="email" placeholder="Enter your email">
+            <button>Subscribe</button>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navbar-menu');
+            menu.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
+
+
+
